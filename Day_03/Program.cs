@@ -23,7 +23,6 @@ namespace Day_03
                     if (char.IsDigit(schema[y][x]))
                     {
                         // look for the end digit
-                        int cx1 = x;
                         int len = 1;
                         while (char.IsDigit(schema[y][x + len])) len++;
 
