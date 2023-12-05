@@ -45,21 +45,6 @@ namespace Day_05
 
         public long MapValue(long val)
         {
-
-            //var mappedValue = Ranges.AsParallel()
-            //    .Select(range => range.MapValue(val))
-            //    .FirstOrDefault(mv => mv.HasValue);
-
-            //return mappedValue ?? val;
-
-            //for(int i=0; i<Ranges.Count; i++)
-            //{
-            //    long? mappedValue = Ranges[i].MapValue(val);
-            //    if (mappedValue.HasValue)
-            //        return mappedValue.Value;
-            //}
-            //return val;
-
             foreach (var range in Ranges)
             {
                 long? mappedValue = range.MapValue(val);
@@ -163,8 +148,8 @@ namespace Day_05
 
             return Seeds
                 .Select((value, index) => new { Index = index, Value = value })
-                .GroupBy(x => x.Index / 2).Select(g => g.Select(x => x.Value)).AsParallel()
-                .SelectMany(pair => LongRange(pair.First(), pair.Last()))
+                .GroupBy(x => x.Index / 2).Select(g => g.Select(x => x.Value).ToList()).ToList()
+                .SelectMany(pair => LongRange(pair[0], pair[1])).AsParallel()
                 .Select(seedsoil.MapValue)
                 .Select(soilfertilizer.MapValue)
                 .Select(fertilizerwater.MapValue)
