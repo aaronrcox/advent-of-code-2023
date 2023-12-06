@@ -56,17 +56,19 @@
 
             var lines = File.ReadAllLines(filename).ToList();
 
-            var times = ParseLine(lines[0]).ToList();
-            var distances = ParseLine(lines[1]).ToList();
+            var times = ParseLine(lines[0]);
+            var distances = ParseLine(lines[1]);
 
-            var racesP1 = times.Zip(distances, (time, distance) => new Race(time, distance)).ToList();
-            int part1Answer = racesP1.Select(r => r.GetWinningRances().Count()).Aggregate(1, (total, next) => total * next);
+            var racesP1 = times.Zip(distances, (time, distance) => new Race(time, distance));
+            int part1Answer = racesP1
+                .Select(r => r.GetWinningRances().Count())
+                .Aggregate(1, (total, next) => total * next);
 
             Console.WriteLine($"Part 1: {part1Answer}");
 
             var combinedTime = long.Parse(string.Join("", times.Select(t => t.ToString())));
             var combinedDist = long.Parse(string.Join("", distances.Select(d => d.ToString())));
-            Race raceP2 = new Race(combinedTime, combinedDist);
+            Race raceP2 = new(combinedTime, combinedDist);
 
             int part2Answer = raceP2.GetWinningRances().Count();
             Console.WriteLine($"Part 2: {part2Answer}");
