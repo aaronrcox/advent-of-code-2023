@@ -94,14 +94,15 @@ namespace Day_07
                 int wildCount = SortableCards.Where(c => c == 'A').Count(); // A == J in the sortable list
                 var cardGroups = SortableCards.ToCharArray()
                     .Where(z => z != 'A') // Filter out wilds before grouping
-                    .GroupBy(x => x).Select(group => new { Value = group.Key, Count = group.Count() }).ToList();
+                    .GroupBy(x => x).Select(group => new { Value = group.Key, Count = group.Count() })
+                    .ToList();
 
                 if(wildCount == 5)
                 {
                     cardGroups.Add(new { Value = 'A', Count = 5 });
                 }
 
-                // disperse the wild into the groups
+                // generate a new hand with the wilds replaced with the best card
                 char[] newSortableCardsArr = SortableCards.ToCharArray();
                 for(int i=0; i<wildCount; i++)
                 {
